@@ -25,5 +25,56 @@
     "nanda": ["Ófullnægjandi tilfinningastjórn"],
     "rating": "⭐⭐⭐⭐"
   },
-  /* … og svo framvegis fyrir hvern hóp … */
+  "chemically_dependent": {
+    "title": { "is": "Vímuefnafíkill", "en": "Chemically Dependent" },
+    "is": {
+      "einkenni": ["Þrá eftir efnum", "Afhroð", "Fleiri álagsvandi"],
+      "medferdir": ["NADA nálastungur", "Meðferð á vímuefnadeild", "Stuðningshópar"]
+    },
+    "greiningarkodar": ["F19.20"],
+    "dbt": [],
+    "nice": ["NG58"],
+    "calgary": [],
+    "nanda": ["Ófullnægjandi bataaðlögun"],
+    "rating": "⭐⭐⭐"
+  },
+  "caucasian_female_adolescent": {
+    "title": { "is": "Hvítt stúlka—unglingur", "en": "Caucasian Female—Adolescent" },
+    "is": {
+      "einkenni": ["Einangrun", "Skapleiðni", "Kvíði"],
+      "medferdir": ["Kognitíf atferlismeðferð", "Fjölskyldumeðferð"]
+    },
+    "greiningarkodar": ["R45.8", "F32.9"],
+    "dbt": ["Núvitund"],
+    "nice": ["CG16"],
+    "calgary": [],
+    "nanda": ["Ófullnægjandi stuðningur"],
+    "rating": "⭐⭐⭐"
+  },
+  "college_student": {
+    "title": { "is": "Háskólanemi", "en": "College Student" },
+    "is": {
+      "einkenni": ["Einstaklingsálag", "Frammistöðukvíði"],
+      "medferdir": ["Streituþjálfun", "Samræðumeðferð"]
+    },
+    "greiningarkodar": ["F41.1"],
+    "dbt": [],
+    "nice": ["QS34"],
+    "calgary": [],
+    "nanda": ["Ófullnægjandi kvíðastjórnun"],
+    "rating": "⭐⭐"
+  },
+  "chronic_medical_illness": {
+    "title": { "is": "Krónískur sjúkdómur", "en": "Chronic Medical Illness" },
+    "is": {
+      "einkenni": ["Langvinnur verkur", "Þrekleysi", "Hugsanir um tilgangsleysi"],
+      "medferdir": ["Sálfræðimeðferð", "Verkjastjórnun", "Stuðningshópar"]
+    },
+    "greiningarkodar": ["R53.2", "F32.0"],
+    "dbt": [],
+    "nice": [],
+    "calgary": [],
+    "nanda": ["Ófullnægjandi hæfni til að takast á við breytingar"],
+    "rating": "⭐⭐"
+  }
 }
