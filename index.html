@@ -9,27 +9,41 @@
 <body>
   <header>
     <h1>Treatment Planner Leit</h1>
-    <p>Leitarvél byggð á bókinni <em>The Suicide and Homicide Risk Assessment & Prevention Treatment Planner</em> (Klott & Jongsma, 2004)…</p>
+    <p>Leitarvél byggð á bókinni <em>The Suicide and Homicide Risk Assessment and Prevention Treatment Planner</em> (Klott &amp; Jongsma, 2004). Hér færðu yfirlit yfir einkenni, meðferðir, greiningarkóða (ICD-10/DSM-5), NICE-leiðbeiningar, Calgary-líkön, DBT-inngrip og NANDA greiningar.</p>
+    <p><strong>Notkunarleiðbeiningar:</strong> Sláðu inn íslenskt eða enskt leitarorð, t.d. <code>dbt</code>, <code>CFIM</code>, <code>QS34</code>, <code>sjálfsskaði</code>, <code>bipolar</code> o.s.frv.</p>
   </header>
 
   <main>
     <div class="search-container">
-      <input type="text" id="search" placeholder="Sláðu inn íslenskt eða enskt leitarorð…">
+      <input type="text" id="search" placeholder="Sláðu inn leitarorð…">
     </div>
     <div id="results"></div>
   </main>
 
   <footer>
-    <p>📘 Um gögnin og tilgang vefverkfærisins…</p>
-    <p>© 2025 Sigríður Ásta Hauksdóttir, fjölskyldufræðingur. Unnið með hjálp gervigreindar…</p>
+    <p>📘 <strong>Um gögnin og tilgang vefverkfærisins:</strong><br>
+    Þetta leitarverkfæri byggir á bókinni <em>The Suicide and Homicide Risk Assessment &amp; Prevention Treatment Planner</em> eftir Jack Klott og Arthur E. Jongsma Jr. (2004), gefin út hjá John Wiley &amp; Sons. Bókin er hluti af PracticePlanners® seríunni og nýtist fagfólki við að meta sjálfsvígshættu, ofbeldishættu og skipuleggja meðferð út frá gagnreyndum viðmiðum.</p>
+
+    <p>📖 <strong>Í bókinni eru 27 hópar:</strong> t.d. Bipolar, Schizophrenic, Gay/Lesbian/Bisexual, Psychiatric Inpatient, Suicide Survivor, o.fl. Hver hópur fær:<br>
+    – Lýsingu á einkennum og áhættuþáttum<br>
+    – Markmið og mælanleg inngrip<br>
+    – Meðferðarleiðir: einstaklings-, fjölskyldu- og lyfjameðferð<br>
+    – Greiningarkóða (DSM-IV/DSM-5; samræming við ICD-10)<br>
+    – Sértæk viðbrögð við sjálfsvígshugsunum og ofbeldishættu</p>
+
+    <p>🧭 <strong>Klínísk viðmið og fræðileg tenging:</strong><br>
+    ✅ NICE-leiðbeiningar (t.d. CG16, CG90, NG58…)<br>
+    🌀 DBT-inngrip eftir kjarnaþáttum (Núvitund, Streituþol, Tilfinningastjórn, Samskiptafærni)<br>
+    👨‍👩‍👧 Calgary Family Nursing Models (CFAM, CFIM)<br>
+    🩺 NANDA hjúkrunargreiningar</p>
+
+    <p>© 2025 Sigríður Ásta Hauksdóttir, fjölskyldufræðingur. Unnið með hjálp gervigreindar og birtist hér með fyrirvörum. Efnið er eingöngu leiðbeinandi verkfæri fyrir sérfræðinga í geðheilbrigðisþjónustu og fjölskyldumeðferð. Notendur bera ábyrgð á klínískri framkvæmd og skal vinna í samræmi við faglega, siðferðislega og lagalega ábyrgð.</p>
   </footer>
 
   <script>
-    // Sjáum til að hlaða JSON og setja upp lunr-index
     fetch('planner.json')
       .then(r => r.json())
       .then(data => {
-        // búa til idx og sýna allt í console til prófunar:
         console.log('Gögn:', data);
         const idx = lunr(function(){
           this.field('title_is');
@@ -40,21 +54,24 @@
           this.field('nice');
           this.field('calgary');
           this.field('nanda');
+          this.field('rating');
           this.ref('key');
           for (let key in data) {
             this.add({
               key: key,
               title_is: data[key].title.is,
               title_en: data[key].title.en,
-              einkenni: (data[key].is.einkenni || []).join(' '),
-              medferdir: (data[key].is.medferdir || []).join(' '),
-              dbt: (data[key].dbt || []).join(' '),
-              nice: (data[key].nice || []).join(' '),
-              calgary: (data[key].calgary || []).join(' '),
-              nanda: (data[key].nanda || []).join(' ')
+              einkenni: (data[key].is.einkenni||[]).join(' '),
+              medferdir: (data[key].is.medferdir||[]).join(' '),
+              dbt: (data[key].dbt||[]).join(' '),
+              nice: (data[key].nice||[]).join(' '),
+              calgary: (data[key].calgary||[]).join(' '),
+              nanda: (data[key].nanda||[]).join(' '),
+              rating: data[key].rating || ''
             });
           }
         });
+
         document.getElementById('search').addEventListener('input', function(){
           const term = this.value.trim();
           const resultsDiv = document.getElementById('results');
