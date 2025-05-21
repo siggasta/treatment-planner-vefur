@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+  <meta charset="UTF-8">
+  <title>Treatment Planner Leit</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Treatment Planner Leit</h1>
+    <p>Leitarvél byggð á bókinni <em>The Suicide and Homicide Risk Assessment & Prevention Treatment Planner</em> (Klott & Jongsma, 2004)…</p>
+  </header>
+
+  <main>
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Sláðu inn íslenskt eða enskt leitarorð…">
+    </div>
+    <div id="results"></div>
+  </main>
+
+  <footer>
+    <p>📘 Um gögnin og tilgang vefverkfærisins…</p>
+    <p>© 2025 Sigríður Ásta Hauksdóttir, fjölskyldufræðingur. Unnið með hjálp gervigreindar…</p>
+  </footer>
+
+  <script>
+    // Sjáum til að hlaða JSON og setja upp lunr-index
+    fetch('planner.json')
+      .then(r => r.json())
+      .then(data => {
+        // búa til idx og sýna allt í console til prófunar:
+        console.log('Gögn:', data);
+        const idx = lunr(function(){
+          this.field('title_is');
+          this.field('title_en');
+          this.field('einkenni');
+          this.field('medferdir');
+          this.field('dbt');
+          this.field('nice');
+          this.field('calgary');
+          this.field('nanda');
+          this.ref('key');
+          for (let key in data) {
+            this.add({
+              key: key,
+              title_is: data[key].title.is,
+              title_en: data[key].title.en,
+              einkenni: (data[key].is.einkenni || []).join(' '),
+              medferdir: (data[key].is.medferdir || []).join(' '),
+              dbt: (data[key].dbt || []).join(' '),
+              nice: (data[key].nice || []).join(' '),
+              calgary: (data[key].calgary || []).join(' '),
+              nanda: (data[key].nanda || []).join(' ')
+            });
+          }
+        });
+        document.getElementById('search').addEventListener('input', function(){
+          const term = this.value.trim();
+          const resultsDiv = document.getElementById('results');
+          if (!term) { resultsDiv.innerHTML = ''; return; }
+          const hits = idx.search(term);
+          if (!hits.length) {
+            resultsDiv.innerHTML = '<p class="no-results">Ekkert fannst fyrir „'+term+'“</p>';
+            return;
+          }
+          resultsDiv.innerHTML = hits.map(hit => {
+            const e = data[hit.ref];
+            return `
+              <div class="result">
+                <h2>${e.title.is} (${e.title.en})</h2>
+                <p><strong>Einkenni:</strong> ${(e.is.einkenni||[]).join(', ')}</p>
+                <p><strong>Meðferðir:</strong> ${(e.is.medferdir||[]).join(', ')}</p>
+                <p><strong>Greiningarkóðar:</strong> ${(e.greiningarkodar||[]).join(', ')}</p>
+                <p><strong>DBT:</strong> ${(e.dbt||[]).join(', ')}</p>
+                <p><strong>NICE:</strong> ${(e.nice||[]).join(', ')}</p>
+                <p><strong>Calgary:</strong> ${(e.calgary||[]).join(', ')}</p>
+                <p><strong>NANDA:</strong> ${(e.nanda||[]).join(', ')}</p>
+                <p><strong>⭐️ Einkun:</strong> ${e.rating||''}</p>
+              </div>`;
+          }).join('');
+        });
+      })
+      .catch(err => {
+        console.error('Villa við að sækja planner.json:', err);
+        document.getElementById('results').innerHTML = '<p class="no-results">Villa við að hlaða gögn.</p>';
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "child": {
+    "title": { "is": "Barn", "en": "Child" },
+    "is": {
+      "einkenni": ["Sjálfsskaði", "Áföll"],
+      "medferdir": ["Leiðsögn", "Leiktíðarmeðferð", "Fjölskyldumeðferð"]
+    },
+    "greiningarkodar": ["F43.2", "R45.81"],
+    "dbt": [],
+    "nice": [],
+    "calgary": [],
+    "nanda": ["Ófullnægjandi tilfinningastjórn"],
+    "rating": "⭐⭐⭐⭐"
+  },
+  "borderline_personality_disorder": {
+    "title": { "is": "Jaðarpersónuleikaröskun", "en": "Borderline Personality Disorder" },
+    "is": {
+      "einkenni": ["Tilfinningalegur óstöðugleiki", "Sjálfsskaði til að draga úr sársauka"],
+      "medferdir": ["DBT", "Sálgreining", "Fjölskyldumeðferð"]
+    },
+    "greiningarkodar": ["301.83"],
+    "dbt": ["Streituþol", "Samskiptafærni"],
+    "nice": ["CG78"],
+    "calgary": ["CFIM"],
+    "nanda": ["Ófullnægjandi tilfinningastjórn"],
+    "rating": "⭐⭐⭐⭐"
+  },
+  /* … og svo framvegis fyrir hvern hóp … */
+}
